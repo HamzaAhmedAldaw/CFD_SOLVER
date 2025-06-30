@@ -1,0 +1,54 @@
+{
+    "simulation": {
+        "type": "incompressible",
+        "time": {
+            "start": 0.0,
+            "end": 10.0,
+            "dt": 0.001,
+            "writeInterval": 0.1
+        }
+    },
+    "mesh": {
+        "file": "cavity.msh",
+        "scale": 1.0
+    },
+    "physics": {
+        "model": "laminar",
+        "properties": {
+            "density": 1.0,
+            "viscosity": 0.001
+        }
+    },
+    "numerics": {
+        "fluxScheme": "Roe",
+        "gradientScheme": "GreenGauss",
+        "limiter": "Venkatakrishnan",
+        "timeIntegration": "RungeKutta4"
+    },
+    "boundaryConditions": [
+        {
+            "name": "top",
+            "type": "fixedValue",
+            "field": "velocity",
+            "value": [1.0, 0.0, 0.0]
+        },
+        {
+            "name": "walls",
+            "type": "noSlip"
+        }
+    ],
+    "solvers": {
+        "pressure": {
+            "type": "PCG",
+            "tolerance": 1e-6,
+            "maxIterations": 1000,
+            "preconditioner": "DIC"
+        },
+        "velocity": {
+            "type": "BiCGSTAB",
+            "tolerance": 1e-6,
+            "maxIterations": 100,
+            "preconditioner": "DILU"
+        }
+    }
+}

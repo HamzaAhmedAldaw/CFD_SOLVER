@@ -1,0 +1,56 @@
+﻿{
+    "simulation": {
+        "type": "incompressible",
+        "time": {
+            "start": 0.0,
+            "end": 5.0,
+            "dt": 0.01,
+            "writeInterval": 0.5
+        }
+    },
+    "mesh": {
+        "type": "structured",
+        "dimensions": [32, 32],
+        "domain": [[0, 1], [0, 1]]
+    },
+    "physics": {
+        "model": "laminar",
+        "properties": {
+            "density": 1.0,
+            "viscosity": 0.01
+        }
+    },
+    "numerics": {
+        "fluxScheme": "AUSM",
+        "gradientScheme": "GreenGauss",
+        "limiter": "Venkatakrishnan",
+        "timeIntegration": "Euler"
+    },
+    "boundaryConditions": [
+        {
+            "name": "top",
+            "type": "fixedValue",
+            "field": "velocity",
+            "value": [1.0, 0.0, 0.0]
+        },
+        {
+            "name": "bottom",
+            "type": "noSlip"
+        },
+        {
+            "name": "left",
+            "type": "noSlip"
+        },
+        {
+            "name": "right",
+            "type": "noSlip"
+        }
+    ],
+    "solvers": {
+        "pressure": {
+            "type": "CG",
+            "tolerance": 1e-6,
+            "maxIterations": 100
+        }
+    }
+}
